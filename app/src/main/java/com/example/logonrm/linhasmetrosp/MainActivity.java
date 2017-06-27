@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.logonrm.linhasmetrosp.adapter.LinhasAdapter;
+import com.example.logonrm.linhasmetrosp.adapter.OnItemClickListener;
 import com.example.logonrm.linhasmetrosp.api.APIUtils;
 import com.example.logonrm.linhasmetrosp.api.MetroAPI;
 import com.example.logonrm.linhasmetrosp.model.LinhasMetro;
@@ -33,7 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        linhasAdapter = new LinhasAdapter(new ArrayList<LinhasMetro>());
+        linhasAdapter = new LinhasAdapter(new ArrayList<LinhasMetro>(), new OnItemClickListener() {
+            @Override
+            public void onItemClick(LinhasMetro item) {
+                Toast.makeText(getApplicationContext(),item.getCor(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

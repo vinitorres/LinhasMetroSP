@@ -20,9 +20,11 @@ import java.util.List;
 public class LinhasAdapter extends RecyclerView.Adapter<LinhasAdapter.LinhasViewHolder>{
 
     private List<LinhasMetro> linhasMetros;
+    private OnItemClickListener listener;
 
-    public LinhasAdapter(List<LinhasMetro> linhasMetros) {
+    public LinhasAdapter(List<LinhasMetro> linhasMetros, OnItemClickListener listener) {
         this.linhasMetros = linhasMetros;
+        this.listener = listener;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class LinhasAdapter extends RecyclerView.Adapter<LinhasAdapter.LinhasView
     }
 
     @Override
-    public void onBindViewHolder(LinhasViewHolder holder, int position) {
+    public void onBindViewHolder(LinhasViewHolder holder, final int position) {
 
         holder.tvTitulo.setText(linhasMetros.get(position).getCor());
         holder.tvSubtitulo.setText(linhasMetros.get(position).getNumero());
@@ -43,6 +45,13 @@ public class LinhasAdapter extends RecyclerView.Adapter<LinhasAdapter.LinhasView
         Picasso.with(holder.itemView.getContext())
                 .load(linhasMetros.get(position).getUrlImage())
                 .into(holder.ivImagem);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(linhasMetros.get(position));
+            }
+        });
     }
 
     @Override
